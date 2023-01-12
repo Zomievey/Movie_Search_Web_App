@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class OmdbService {
-  private url = 'http://www.omdbapi.com/';
+  private url = 'https://www.omdbapi.com/';
   private apiKey = '926b1c08'; //api key goes here
 
   constructor(private http: HttpClient) { }
