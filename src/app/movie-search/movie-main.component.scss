@@ -1,0 +1,40 @@
+.main-title {
+  font-size: 1em;
+  font-weight: 600;
+  color: #171717;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  margin: 0px !important;
+  display: flex;
+  justify-content: center;
+}
+
+#title {
+  padding: 1em;
+}
+
+.title-image {
+  display: flex;
+  justify-content: left;
+  height: 40px;
+
+}
+
+.title-image-2 {
+  display: flex;
+  justify-content: left;
+  height: 40px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

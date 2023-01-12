@@ -1,0 +1,41 @@
+<div class="search-container">
+  <div class="search-bar-container">
+    <div class="search-bar">
+      <form class="search-bar">
+        <input type="search" name="search" pattern=".*\S.*" name="query" required #query
+          placeholder="Enter a movie title, or a word in the title, (e.g. Avatar)" />
+        <button (click)="searchMovies(query.value)" class="search-btn" type="submit">
+
+        </button>
+      </form>
+
+    </div>
+    <div class="info"><h5 *ngIf="getStarted">Click magnifying glass to get started!</h5></div>
+  </div>
+</div>
+
+<div class="results-container">
+  <div class="result" *ngFor="let result of results">
+    <h2>{{ result.Title }}</h2>
+    <h4>{{ result.Year }}</h4>
+    <h4>{{ result.Type }}</h4>
+    <div class="tp-wrapper">
+      <div class="tp-box" (click)="getSummary(result.Title)" [@flipState]="result.currentPlot ? 'active' : 'inactive'">
+        <div class="center-image">
+          <div [hidden]="!result.currentPlot" class="container">
+            <img src="{{ result.Poster }}" alt="Avatar" class="image" style="width: 100%" />
+            <div class="middle">
+              <div class="text">Movie Summary</div>
+            </div>
+          </div>
+        </div>
+        <div class="plot-container" *ngIf="result.currentPlot === false">
+          <p *ngIf="result.summary">{{ result.summary.Plot }}</p>
+          <p *ngIf="!result.summary">Sorry, there is not a summary available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- hide poster display boolean flip = false; toggleFlip() { this.flip = !this.flip} -->
