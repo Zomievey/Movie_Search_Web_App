@@ -35,7 +35,7 @@
         </div>
         <div class="plot-container" *ngIf="result.currentPlot === false">
           <p *ngIf="result.summary">{{ result.summary.Plot }}</p>
-          <p *ngIf="!result.summary">Sorry, there is not a summary available.</p>
+          <p *ngIf="!result.summary || result.summary === null">Sorry, there is not a summary available.</p>
         </div>
       </div>
     </div>

@@ -37,64 +37,57 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   searchMovies(title: string) {
-    this.getStarted = false;
     this.omdbService.getMovies(title).subscribe((data: any) => {
       this.results = data.Search;
-      this.results.forEach((result: { flip: string; currentPlot: boolean; }) => {
+      this.results.forEach((result: {
+        summary: any; flip: string; currentPlot: boolean; hasSummary: boolean; isFlipped: boolean;
+      }) => {
         result.flip = 'inactive';
         result.currentPlot = true;
+        result.hasSummary = !!result.summary 
+        result.isFlipped = false;
       });
     });
   }
 
-  getMovieById(title: string) {
-    return this.results.filter((result: { Title: string; }) => result.Title === title)[0];
-  }
-
-getSummary(title: string) {
+  getSummary(title: string) {
     let movie = this.results.filter((result: { Title: string; }) => result.Title === title)[0];
     if (!movie.summary) {
-        this.omdbService.getMoviePlot(title).subscribe((data: any) => {
-            movie.summary = data;
-            this.results.forEach((result: { Title: string; currentPlot: boolean; }) => {
-                if (result.Title === title) {
-                    result.currentPlot = !result.currentPlot;
-                } else {
-                    result.currentPlot = true;
-                }
-            });
-        });
-    } else {
+      this.omdbService.getMoviePlot(title).subscribe((data: any) => {
+        movie.summary = data;
         this.results.forEach((result: { Title: string; currentPlot: boolean; }) => {
-            if (result.Title === title) {
-                result.currentPlot = !result.currentPlot;
-            } else {
-                result.currentPlot = true;
-            }
+          if (result.Title === title) {
+            result.currentPlot = !result.currentPlot;
+          } else {
+            result.currentPlot = true;
+          }
         });
-    }
-}
-
-
-
-  toggleFlip(title: string) {
-    this.currentPlot = !this.currentPlot;
-    let movie = this.results.filter((result: { Title: string; }) => result.Title === title)[0];
-    movie.flip = (movie.flip == 'inactive') ? 'active' : 'inactive';
-    if (movie) {
-      this.getSummary(movie.Title);
+      });
+    } else {
+      this.results.forEach((result: { Title: string; currentPlot: boolean; }) => {
+        if (result.Title === title) {
+          result.currentPlot = !result.currentPlot;
+        } else {
+          result.currentPlot = true;
+        }
+      });
     }
   }
+
+  toggleFlip(title: string) {
+    let movie = this.results.filter((result: { Title: string; }) => result.Title === title)[0];
+    if(!movie.hasSummary || movie.isFlipped){
+    return;
+    }
+    movie.isFlipped = true;
+    this.currentPlot = !this.currentPlot;
+    movie.flip = (movie.flip == 'inactive') ? 'active' : 'inactive';
+    if (movie) {
+    this.getSummary(movie.Title);
+    }
+    }
+
 }
-
-// i want to only flip the current plot maybe by setting a boolean? current plot?
-
-//when flipped then get the plot
-
-//call out API IMDBid as the paramter 
-
-//make call before flip
 
 
